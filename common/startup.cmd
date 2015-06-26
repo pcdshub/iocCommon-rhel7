@@ -23,8 +23,16 @@
 export EXTRA_LD_LIBS=/reg/d/iocCommon/linuxRT/extralibs
 
 # ===================================================================
-# Start the world.
-# Selects versions for desired kernel-modules, runs comon/kernel-modules.cmd,
-# then launches the iocManager.
+# Run host specific startup
+# Allows host specific selection of versions for desired kernel-modules
 # ==================================================================
-/reg/d/iocCommon/linuxRT/`hostname`/startup.cmd
+source /reg/d/iocCommon/linuxRT/`hostname`/startup.cmd
+
+# ===================================================================
+# Load linux Kernel Modules 
+# ==================================================================
+# Must be done as "root" user.
+source /reg/d/iocCommon/linuxRT/common/kernel-modules.cmd
+
+# Launch the iocManager
+/reg/g/pcds/pyps/apps/ioc/latest/initIOC

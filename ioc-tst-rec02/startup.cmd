@@ -18,12 +18,3 @@ export EDT_DRIVER=$KERNEL_DRIVER_HOME/edt/$LINUX_RT/EDTpdv
 sysctl -w kernel.core_pattern=/tmp/%p.core
 ulimit -c unlimited
 
-
-# ===================================================================
-# Load linux Kernel Modules 
-# ==================================================================
-# Must be done as "root" user.
-/reg/d/iocCommon/linuxRT/common/kernel-modules.cmd
-
-# Launch the iocManager
-/reg/g/pcds/pyps/apps/ioc/latest/initIOC
