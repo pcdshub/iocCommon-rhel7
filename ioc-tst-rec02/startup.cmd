@@ -12,7 +12,6 @@ LINUX_RT=buildroot-glibc-x86_64
 export PERLE_SERIAL_DRIVER=$KERNEL_DRIVER_HOME/perle-serial/$LINUX_RT
 export MEGARAID_DRIVER=$KERNEL_DRIVER_HOME/megaRAID/$LINUX_RT
 export EDT_DRIVER=$KERNEL_DRIVER_HOME/edt/$LINUX_RT/EDTpdv
-#export EVENT2_DRIVER=$KERNEL_DRIVER_HOME/event2/$LINUX_RT
 
 # Optional: Enable kernel debugging
 sysctl -w kernel.core_pattern=/tmp/%p.core
