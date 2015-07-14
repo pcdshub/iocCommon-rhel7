@@ -1,4 +1,11 @@
 # =========================================
+# Setup environment
+# =========================================
+export EXTRA_LD_LIBS=/reg/d/iocCommon/linuxRT/extralibs
+export TZ=PST8PDT
+export LINUXRT_T_A=linuxRT_glibc-x86_64
+
+# =========================================
 # Find the packages and driver paths
 # =========================================
 if [ "$PACKAGE_SITE_TOP" == "" ];
@@ -31,9 +38,9 @@ if [ "$EDT_DRIVER" == "" ];
 then
 	if [ "$EDT_VER" == "" ];
 	then
-		EDT_VER=5.4.5.1
+		EDT_VER=R5.4.5.1
 	fi
-	EDT_DRIVER=$PACKAGE_SITE_TOP/EdtPdv/$EDT_VER
+	EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER/$LINUXRT_T_A
 fi
 
 # Select default event2 driver if not overridden
@@ -45,6 +52,14 @@ then
 	fi
 	EVENT2_DRIVER=/reg/g/pcds/pacakge/epics/3.14/modules/event2/$EVENT2_VER/
 fi
+
+# =================================================
+# Install the PCDS linuxRT package
+# Needed to support the IOCManager and EDT driver script
+# =================================================
+export PSPKG_ROOT=/reg/common/package
+export PSPKG_RELEASE=linuxRT-0.0.1
+source $PSPKG_ROOT/etc/set_env.sh
 
 # =================================================
 # Install the kernel drivers for installed hardware
@@ -83,7 +98,7 @@ then
 	then
 		echo Installing EDT driver: $EDT_DRIVER
 		mkdir -p /opt/EDTpdv
-		busybox mount --bind $EDT_DRIVER /opt/EDTpdv
+		mount --bind $EDT_DRIVER /opt/EDTpdv
 		/opt/EDTpdv/edtinit start
 	else
 		echo EDT framegrabber not found.
