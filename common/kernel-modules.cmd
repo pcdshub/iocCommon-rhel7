@@ -107,8 +107,11 @@ fi
 
 if [ -d $EVENT2_DRIVER ];
 then
-	lspci_evr=`lspci -d 123d:* -n`
-	if [ "$lspci_evr" != "" ];
+	# Check for MRF EVR boards w/ PLX 9030 bridge
+	lspci_mrf_evr=`lspci -d 10b5:9030 -n`
+	# Also check for SLAC EVR
+	lspci_slac_evr=`lspci -d 1a4a:2010 -n`
+	if [ "$lspci_mrfevr" != "" -o "$lspci_slac_mrfevr" != "" ];
 	then
 		echo Installing EVENT2 driver: $EVENT2_DRIVER
 		$EVENT2_DRIVER/driver/evr_load_module
