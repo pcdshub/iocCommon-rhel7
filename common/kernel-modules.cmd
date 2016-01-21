@@ -10,7 +10,7 @@ export KERNEL_DRIVER_HOME=/reg/neh/home/mdewart/workspace/linuxKernel_Modules
 # Find the packages and driver paths, allowing override
 # of the default driver version or path
 # =========================================
-source $IOC_COMMON/$T_A/common/kernel-module-dirs.cmd
+source $IOC_COMMON/linuxRT/common/kernel-module-dirs.cmd
 
 # =================================================
 # Install the kernel drivers for installed hardware

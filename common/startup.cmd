@@ -12,7 +12,7 @@ if [ -d /reg/d/iocCommon ]; then
 	# =============================================================
 	# Mount NFS drives for PCDS environment
 	# =============================================================
-	source /reg/d/iocCommon/$T_A/common/linuxRT_nfs.cmd
+	source /reg/d/iocCommon/linuxRT/common/linuxRT_nfs.cmd
 else
 	# =============================================================
 	# Mount NFS drives for LCLS environment
@@ -33,14 +33,14 @@ fi
 # Needed to support the IOCManager and a bash environment
 # =================================================
 export PSPKG_RELEASE=linuxRT-0.0.3
-export EXTRA_LD_LIBS=$IOC_COMMON/$T_A/extralibs
+export EXTRA_LD_LIBS=$IOC_COMMON/linuxRT/extralibs
 source $PSPKG_ROOT/etc/set_env.sh
 
-# Install bash and perl
-export EXTRA_BIN=$IOC_COMMON/$T_A/extrabins
+# Install bash, expand, and a dummy xauth
+export EXTRA_BIN=$IOC_COMMON/linuxRT/extrabins
 if [ -d $EXTRA_BIN ]; then
 	cp $EXTRA_BIN/bash /usr/bin
-	#cp $EXTRA_BIN/perl /usr/bin
+	cp $EXTRA_BIN/expand /usr/bin
 	cp $EXTRA_BIN/xauth /usr/bin
 fi
 if [ -d $EXTRA_LD_LIBS ]; then
@@ -55,15 +55,15 @@ fi
 if [ ! -e "/etc/profile.d" ]; then
 	mkdir /etc/profile.d
 fi
-cp $IOC_COMMON/$T_A/facility/ioc_env.sh /etc/profile.d/
-cp $IOC_COMMON/$T_A/facility/linuxRT_env.sh /etc/profile.d/
+cp $IOC_COMMON/linuxRT/facility/ioc_env.sh /etc/profile.d/
+cp $IOC_COMMON/linuxRT/facility/linuxRT_env.sh /etc/profile.d/
 chmod 0777 /etc/profile.d/ioc_env.sh 
 chmod 0777 /etc/profile.d/linuxRT_env.sh 
 
 # =============================================================
 # Create PCDS user id's
 # =============================================================
-source $IOC_COMMON/$T_A/common/linuxRT_users.cmd
+source $IOC_COMMON/linuxRT/common/linuxRT_users.cmd
 
 # Turn on CORE Dumps, memory locking, and real time scheduling
 sysctl -w kernel.core_pattern=/tmp/%p.core
@@ -75,15 +75,15 @@ ulimit -r unlimited
 # Run host specific startup if supplied
 # Allows host specific selection of versions for kernel-modules
 # =============================================================
-if [ -f $IOC_COMMON/$T_A/`hostname`/startup.cmd ];
+if [ -f $IOC_COMMON/linuxRT/`hostname`/startup.cmd ];
 then
-	source $IOC_COMMON/$T_A/`hostname`/startup.cmd
+	source $IOC_COMMON/linuxRT/`hostname`/startup.cmd
 fi
 
 # =============================================================
 # Load Kernel Modules 
 # =============================================================
-source $IOC_COMMON/$T_A/common/kernel-modules.cmd
+source $IOC_COMMON/linuxRT/common/kernel-modules.cmd
 
 # Some older versions of iocManager use PYPS_ROOT instead of PYPS_SITE_TOP
 PYPS_ROOT=$PYPS_SITE_TOP
