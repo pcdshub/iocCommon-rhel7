@@ -5,9 +5,6 @@
 # pspxe:/u2/images/tftpboot/PXE/64_bit_RTLINUX/ipxe.ini
 # Must be run as the "root" user.
 
-# Set the target architecture
-export T_A=linuxRT_glibc-x86_64
-
 if [ -d /reg/d/iocCommon ]; then
 	# =============================================================
 	# Mount NFS drives for PCDS environment
@@ -34,19 +31,22 @@ fi
 # =================================================
 export PSPKG_RELEASE=linuxRT-0.0.3
 export EXTRA_LD_LIBS=$IOC_COMMON/linuxRT/extralibs
-source $PSPKG_ROOT/etc/set_env.sh
+# source $PSPKG_ROOT/etc/set_env.sh
 
 # Install bash, expand, and a dummy xauth
 export EXTRA_BIN=$IOC_COMMON/linuxRT/extrabins
 if [ -d $EXTRA_BIN ]; then
-	cp $EXTRA_BIN/bash /usr/bin
-	cp $EXTRA_BIN/expand /usr/bin
-	cp $EXTRA_BIN/xauth /usr/bin
+	ln -s $EXTRA_BIN/bash   /bin/bash
+	ln -s $EXTRA_BIN/expand /usr/bin/expand
+	ln -s $EXTRA_BIN/xauth  /usr/bin/xauth
 fi
+
+# Make sure any needed extra libs installed
 if [ -d $EXTRA_LD_LIBS ]; then
-	# Make sure needed libs for bash are installed
-	cp $EXTRA_LD_LIBS/libtinfo.so.5 /lib64
-	#cp $EXTRA_LD_LIBS/libselinux.so.1 /lib64
+	# bash needs libtinfo.so.5
+	ln -s $EXTRA_LD_LIBS/libtinfo.so.5 /lib64/libtinfo.so.5
+	# Do NOT install libselinux as it blocks logins
+	# XX $EXTRA_LD_LIBS/libselinux.so.1 /lib64
 fi
 
 # =========================================
@@ -84,6 +84,14 @@ fi
 # Load Kernel Modules 
 # =============================================================
 source $IOC_COMMON/linuxRT/common/kernel-modules.cmd
+
+# =================================================
+# Install the PCDS linuxRT package
+# Needed to support the IOCManager and a bash environment
+# =================================================
+export PSPKG_RELEASE=linuxRT-0.0.3
+export EXTRA_LD_LIBS=$IOC_COMMON/linuxRT/extralibs
+source $PSPKG_ROOT/etc/set_env.sh
 
 # Some older versions of iocManager use PYPS_ROOT instead of PYPS_SITE_TOP
 PYPS_ROOT=$PYPS_SITE_TOP

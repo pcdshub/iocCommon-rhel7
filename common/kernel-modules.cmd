@@ -23,7 +23,8 @@ then
 		echo Installing EDT driver: $EDT_DRIVER
 		mkdir -p /opt/EDTpdv
 		mount --bind $EDT_DRIVER /opt/EDTpdv
-		/opt/EDTpdv/edtinit start
+		ln -s $EDT_DRIVER/../pdv /opt/pdv
+		/opt/EDTpdv/edtinit.sh start
 	else
 		echo EDT framegrabber not found.
 	fi

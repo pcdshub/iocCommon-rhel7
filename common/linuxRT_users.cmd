@@ -12,6 +12,9 @@ if which bash 2>&1 /dev/null; then
 	USER_SHELL=/bin/sh
 else
 	BASH_SHELL=$(which bash)
+	if [ X$BASH_SHELL != X ]; then
+	    BASH_SHELL=/bin/sh
+	fi
 	# Do we want to do this?
 	#USER_SHELL=$BASH_SHELL
 fi
@@ -26,6 +29,8 @@ if [ -n "$BASH_SHELL" ]; then
 	echo $BASH_SHELL	>> /etc/shells
 fi
 
+# TODO:
+# Look into using openldap for handling our user and group id's
 # ====================================================================
 # Create PCDS group
 addgroup -g 2341 ps-ioc
@@ -46,6 +51,6 @@ adduser -G ps-ioc -u 10667 xcsioc -s $USER_SHELL -D; passwd -d xcsioc
 adduser -G ps-ioc -u 10666 xppioc -s $USER_SHELL -D; passwd -d xppioc
 
 # Test only
-adduser -G ps-ioc -u 10174 bhill -s $BASH_SHELL -D -h /home2/bhill; passwd -d bhill
+adduser -G ps-ioc -u 10174 bhill -s $BASH_SHELL -D -h /home5/bhill; passwd -d bhill
 
 # End of file

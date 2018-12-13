@@ -3,9 +3,9 @@ if [ "$EDT_DRIVER" == "" ];
 then
 	if [ "$EDT_VER" == "" ];
 	then
-		EDT_VER=R5.4.5.1
+		EDT_VER=R5.4.9.6
 	fi
-	EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER/$T_A
+	EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER/`uname -r`
 fi
 
 # Select default event2 driver if not overridden
@@ -13,7 +13,7 @@ if [ "$EVENT2_DRIVER" == "" ];
 then
 	if [ "$EVENT2_VER" == "" ];
 	then
-		EVENT2_VER=latest
+		EVENT2_VER=drivers_current
 	fi
 	EVENT2_DRIVER=$EPICS_SITE_TOP/modules/event2/$EVENT2_VER/
 fi
