@@ -8,9 +8,6 @@ fi
 # Set umask default to allow group write access
 umask 0002
 
-# Select EPICS environment
-source $SETUP_SITE_TOP/epicsenv-3.14.12.sh
-
 if [ `uname -r` = "3.14.12-rt9" ]; then
 export PAGER='less'
 else
