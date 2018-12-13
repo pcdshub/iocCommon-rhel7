@@ -15,31 +15,27 @@ source $IOC_COMMON/linuxRT/common/kernel-module-dirs.cmd
 # =================================================
 # Install the kernel drivers for installed hardware
 # =================================================
-if [ -d $EDT_DRIVER/ ];
-then
-	lspci_edt=`lspci -d 123d:* -n`
-	if [ "$lspci_edt" != "" ];
-	then
+lspci_edt=`lspci -d 123d:* -n`
+if [ "$lspci_edt" != "" ]; then
+	if [ -d $EDT_DRIVER/ ]; then
 		echo Installing EDT driver: $EDT_DRIVER
 		mkdir -p /opt/EDTpdv
 		mount --bind $EDT_DRIVER /opt/EDTpdv
 		ln -s $EDT_DRIVER/../pdv /opt/pdv
 		/opt/EDTpdv/edtinit.sh start
 	else
-		echo EDT framegrabber not found.
+		echo EDT driver dir not found: $EDT_DRIVER
 	fi
 else
-	echo EDT driver dir not found: $EDT_DRIVER
+	echo EDT framegrabber not found.
 fi
 
-if [ -d $EVENT2_DRIVER/ ];
-then
-	# Check for MRF EVR boards w/ PLX 9030 bridge
-	lspci_mrf_evr=`lspci -d 10b5:9030 -n`
-	# Also check for SLAC EVR
-	lspci_slac_evr=`lspci -d 1a4a:2010 -n`
-	if [ "$lspci_mrf_evr" != "" -o "$lspci_slac_evr" != "" ];
-	then
+# Check for MRF EVR boards w/ PLX 9030 bridge
+lspci_mrf_evr=`lspci -d 10b5:9030 -n`
+# Also check for SLAC EVR
+lspci_slac_evr=`lspci -d 1a4a:2010 -n`
+if [ "$lspci_mrf_evr" != "" -o "$lspci_slac_evr" != "" ]; then
+	if [ -d $EVENT2_DRIVER/ ]; then
 		echo Installing EVENT2 driver: $EVENT2_DRIVER
 		$EVENT2_DRIVER/driver/evr_load_module
 		if [ -e /dev/era0 ];
@@ -55,39 +51,37 @@ then
 			/sbin/rmmod pci_mrfevg
 		fi
 	else
-		echo EVR not found.
+		echo event2 driver dir not found: $EVENT2_DRIVER
 	fi
+else
+	echo EVR not found.
 fi
 
-if [ -d $PERLE_SERIAL_DRIVER ];
-then
-	lspci_perle=`lspci -d 155f:* -n`
-	if [ "$lspci_perle" != "" ];
-	then
+lspci_perle=`lspci -d 155f:* -n`
+if [ "$lspci_perle" != "" ]; then
+	if [ -d $PERLE_SERIAL_DRIVER ]; then
 		echo Installing PERLE driver: $PERLE_SERIAL_DRIVER
 		insmod $PERLE_SERIAL_DRIVER/perle-serial.ko
 	else
-		echo Perle device not found.
+		echo Perle Serial driver dir not found: $PERLE_SERIAL_DRIVER
 	fi
 else
-	echo Perle Serial driver dir not found: $PERLE_SERIAL_DRIVER
+	echo Perle device not found.
 fi
 
-if [ -d $MEGARAID_DRIVER ];
-then
-	lspci_megaraid=`lspci -d 1000:005d -n`
-	if [ "$lspci_megaraid" != "" ];
-	then
+lspci_megaraid=`lspci -d 1000:005d -n`
+if [ "$lspci_megaraid" != "" ]; then
+	if [ -d $MEGARAID_DRIVER ]; then
 		echo Installing MegaRaid driver: $MEGARAID_DRIVER
 		insmod $MEGARAID_DRIVER/megaraid_sas.ko
 
 		#megaRAID command line utility
 		ln -s $MEGARAID_DRIVER/storcli64 /usr/bin/storcli64
 	else
-		echo MegaRaid device not found.
+		echo Megaraid driver dir not found: $MEGARAID_DRIVER
 	fi
 else
-	echo Megaraid driver dir not found: $MEGARAID_DRIVER
+	echo MegaRaid device not found.
 fi
 
 
