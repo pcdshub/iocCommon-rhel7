@@ -2,15 +2,13 @@
 # =========================================
 # Set environment variables for kernel drivers
 # =========================================
-export BUILDROOT_T_A=buildroot-glibc-x86_64
-#export KERNEL_DRIVER_HOME=$PACKAGE_SITE_TOP/linuxKernel_Modules
-export KERNEL_DRIVER_HOME=/reg/neh/home/mdewart/workspace/linuxKernel_Modules
+export TZ=PST8PDT
 
 # =========================================
 # Find the packages and driver paths, allowing override
 # of the default driver version or path
 # =========================================
-source $IOC_COMMON/linuxRT/common/kernel-module-dirs.cmd
+source $IOC_COMMON/$T_A/common/kernel-module-dirs.cmd
 
 # =================================================
 # Install the kernel drivers for installed hardware
@@ -84,6 +82,12 @@ else
 	echo MegaRaid device not found.
 fi
 
+
+# Cleanup env so defaults won't stick during debugging
+unset EDT_DRIVER;			unset EDT_VER
+unset EVENT2_DRIVER;		unset EVENT2_VER
+unset MEGARAID_DRIVER;		unset MEGARAID_VER
+unset PERLE_SERIAL_DRIVER;	unset PERLE_VER
 
 # Cleanup env so defaults won't stick during debugging
 unset EDT_DRIVER;			unset EDT_VER
