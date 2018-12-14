@@ -2,7 +2,9 @@
 # =========================================
 # Set environment variables for kernel drivers
 # =========================================
-export TZ=PST8PDT
+export BUILDROOT_T_A=buildroot-glibc-x86_64
+#export KERNEL_DRIVER_HOME=$PACKAGE_SITE_TOP/linuxKernel_Modules
+export KERNEL_DRIVER_HOME=/reg/neh/home/mdewart/workspace/linuxKernel_Modules
 
 # =========================================
 # Find the packages and driver paths, allowing override
