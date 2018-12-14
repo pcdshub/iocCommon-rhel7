@@ -43,8 +43,11 @@ fi
 
 # =============================================================
 # Create PCDS user id's
+# Must be done manually for apalis so passwords can be set.
+# Only needs to be done once, but filesystem needs to be mounted
+# rw so the user id's can be added and saved.
 # =============================================================
-source $IOC_COMMON/$T_A/common/add_users.cmd
+# source $IOC_COMMON/$T_A/common/add_users.cmd
 
 # Turn on CORE Dumps, memory locking, and real time scheduling
 sysctl -w kernel.core_pattern=/tmp/%p.core
