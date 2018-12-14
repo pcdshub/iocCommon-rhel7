@@ -12,7 +12,7 @@ if [ -d /reg/d/iocCommon ]; then
 	# =============================================================
 	# Mount NFS drives for PCDS environment
 	# =============================================================
-	source /reg/d/iocCommon/$T_A/common/linuxRT_nfs.cmd
+	source /reg/d/iocCommon/$T_A/common/mount_nfs.cmd
 else
 	# =============================================================
 	# Mount NFS drives for LCLS environment
@@ -44,7 +44,7 @@ fi
 # =============================================================
 # Create PCDS user id's
 # =============================================================
-source $IOC_COMMON/$T_A/common/linuxRT_users.cmd
+source $IOC_COMMON/$T_A/common/add_users.cmd
 
 # Turn on CORE Dumps, memory locking, and real time scheduling
 sysctl -w kernel.core_pattern=/tmp/%p.core
