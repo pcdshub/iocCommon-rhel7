@@ -4,31 +4,6 @@
 #	username = laci, group = lcls, UID = 8412, GID = 2211
 # ====================================================================
 
-# ====================================================================
-# Set the default shell for ioc userid's
-#BASH_SHELL=/reg/g/pcds/pkg_mgr/release/linuxRT-0.0.3/x86_64-rhel6-gcc44-opt/bin/bash
-USER_SHELL=/bin/sh
-if which bash 2>&1 /dev/null; then
-	USER_SHELL=/bin/sh
-else
-	BASH_SHELL=$(which bash)
-	if [ X$BASH_SHELL != X ]; then
-	    BASH_SHELL=/bin/sh
-	fi
-	# Do we want to do this?
-	#USER_SHELL=$BASH_SHELL
-fi
-
-echo Default USER_SHELL set to: $USER_SHELL
-
-if [ -n "$BASH_SHELL" ]; then
-	# Add bash shell to list of authorized shells besides /bin/sh and /bin/csh
-	echo /bin/sh		>> /etc/shells
-	echo /bin/csh		>> /etc/shells
-	echo $USER_SHELL	>> /etc/shells
-	echo $BASH_SHELL	>> /etc/shells
-fi
-
 # TODO:
 # Look into using openldap for handling our user and group id's
 # ====================================================================
