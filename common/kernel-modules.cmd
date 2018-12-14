@@ -89,10 +89,4 @@ unset EVENT2_DRIVER;		unset EVENT2_VER
 unset MEGARAID_DRIVER;		unset MEGARAID_VER
 unset PERLE_SERIAL_DRIVER;	unset PERLE_VER
 
-# Cleanup env so defaults won't stick during debugging
-unset EDT_DRIVER;			unset EDT_VER
-unset EVENT2_DRIVER;		unset EVENT2_VER
-unset MEGARAID_DRIVER;		unset MEGARAID_VER
-unset PERLE_SERIAL_DRIVER;	unset PERLE_VER
-
 # END of kernel-modules.cmd =========================================
