@@ -6,7 +6,10 @@
 # Mount the IOC data area so that the IOC can write files.
 # =============================================================
 mkdir -p /reg/d/iocData
-mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocData   /reg/d/iocData
+mount | egrep /reg/d/iocData > /dev/null
+if [ $? == 1 ]; then
+	mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocData   /reg/d/iocData
+fi
 
 # =============================================================
 # Note: /reg/d/iocCommon has already been mounted via ipxe.ini so
@@ -33,24 +36,42 @@ mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocD
 #ln -s /reg/neh/home3 /home3
 
 mkdir -p  /reg/neh/home4/mcbrowne
-mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.81:/nfsexport/datapool/home4/mcbrowne /reg/neh/home4/mcbrowne
-ln -s /reg/neh/home4 /home4
+mount | egrep /reg/neh/home4/mcbrowne > /dev/null
+if [ $? == 1 ]; then
+	mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.81:/nfsexport/datapool/home4/mcbrowne /reg/neh/home4/mcbrowne
+fi
+if [ ! -e /reg/neh/home4 ]; then
+	ln -s /reg/neh/home4 /home4
+fi
 
 mkdir -p /reg/neh/home
-ln -s /reg/neh/home4/mcbrowne /reg/neh/home/mcbrowne
+if [ ! -e /reg/neh/home4/mcbrowne ]; then
+	ln -s /reg/neh/home4/mcbrowne /reg/neh/home/mcbrowne
+fi
 
 mkdir -p  /reg/neh/home5/bhill
-mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.80:/nfsexport/datapool/home5/bhill /reg/neh/home5/bhill
-ln -s /reg/neh/home5 /home5
+mount | egrep /reg/neh/home5/bhill > /dev/null
+if [ $? == 1 ]; then
+	mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.80:/nfsexport/datapool/home5/bhill /reg/neh/home5/bhill
+fi
+if [ ! -e /reg/neh/home5 ]; then
+	ln -s /reg/neh/home5 /home5
+fi
 
 # =============================================================
 # Mount PCDS package directories for drivers and IOC releases
 # =============================================================
 
 mkdir -p /reg/g/pcds
-mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.88:/nfsexport/datapool/pcds   /reg/g/pcds
+mount | egrep /reg/g/pcds > /dev/null
+if [ $? == 1 ]; then
+	mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.88:/nfsexport/datapool/pcds   /reg/g/pcds
+fi
 
 mkdir -p /reg/common/package
-mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.88:/nfsexport/datapool/package   /reg/common/package
+mount | egrep /reg/common/package > /dev/null
+if [ $? == 1 ]; then
+	mount -o nolock,ro,hard,intr,vers=3 -t nfs 172.21.32.88:/nfsexport/datapool/package   /reg/common/package
+fi
 
 # End of file
