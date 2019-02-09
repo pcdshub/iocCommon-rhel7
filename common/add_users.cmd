@@ -1,8 +1,20 @@
 # ====================================================================
-# At the moment our linuxRT targets boot up with only one user account
+# At the moment our embedded targets boot up with only one user account
 # defined in the root file system:
 #	username = laci, group = lcls, UID = 8412, GID = 2211
 # ====================================================================
+
+# Setup default profile scripts for users
+if [ -f $IOC_COMMON/$T_A/facility/ioc_env.sh ]; then
+	# =========================================
+	# Setup environment for ioc users
+	# =========================================
+	if [ ! -e "/etc/profile.d" ]; then
+		mkdir /etc/profile.d
+	fi
+	cp $IOC_COMMON/$T_A/facility/ioc_env.sh     /etc/profile.d/
+	chmod 0777 /etc/profile.d/ioc_env.sh 
+fi
 
 # TODO:
 # Look into using openldap for handling our user and group id's

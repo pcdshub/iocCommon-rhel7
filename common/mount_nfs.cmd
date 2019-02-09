@@ -12,8 +12,8 @@ if [ $? == 1 ]; then
 fi
 
 # =============================================================
-# Note: /reg/d/iocCommon has already been mounted via ipxe.ini so
-# /reg/d/iocCommon/linuxRT/common/startup.cmd can be run as BOOTFILE
+# Note: /reg/d/iocCommon has already been mounted via
+# /mnt/user/data/config/slac_startup.cmd
 # =============================================================
 
 # ==============================================================================

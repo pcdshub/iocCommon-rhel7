@@ -8,41 +8,31 @@
 # Set the target architecture
 export T_A=apalis
 
-if [ -d /reg/d/iocCommon ]; then
+# =============================================================
+# Setup the common directory env variables
+# Set the common directory env variables
+if   [ -f  /usr/local/lcls/epics/config/common_dirs.sh ]; then
+	source /usr/local/lcls/epics/config/common_dirs.sh 
+elif [ -f  /reg/g/pcds/pyps/config/common_dirs.sh ]; then
+	source /reg/g/pcds/pyps/config/common_dirs.sh
+elif [ -f  /afs/slac/g/lcls/epics/config/common_dirs.sh ]; then
+	source /afs/slac/g/lcls/epics/config/common_dirs.sh
+fi
+
+if [ -f $IOC_COMMON/$T_A/common/mount_nfs.cmd ]; then
 	# =============================================================
-	# Mount NFS drives for PCDS environment
+	# Mount common NFS drives
 	# =============================================================
-	source /reg/d/iocCommon/$T_A/common/mount_nfs.cmd
-else
+	source $IOC_COMMON/$T_A/common/mount_nfs.cmd
+elif [ -f /afs/slac/g/lcls/epics/iocCommon/apalis/common/mount_nfs.cmd ]; then
 	# =============================================================
 	# Mount NFS drives for LCLS environment
 	# =============================================================
-	source /afs/slac/g/lcls/epics/iocCommon/All/Dev/linuxRT_nfs.sh
+	source /afs/slac/g/lcls/epics/iocCommon/apalis/common/mount_nfs.cmd 
 fi
 
 # =============================================================
-# Setup the common directory env variables
-if [ -e /reg/g/pcds/pyps/config/common_dirs.sh ]; then
-	source /reg/g/pcds/pyps/config/common_dirs.sh
-else
-	source /afs/slac/g/pcds/config/common_dirs.sh
-fi
-
-if [ -f $IOC_COMMON/$T_A/facility/ioc_env.sh ]; then
-	# =========================================
-	# Setup environment for ioc users
-	# =========================================
-	if [ ! -e "/etc/profile.d" ]; then
-		mkdir /etc/profile.d
-	fi
-	cp $IOC_COMMON/$T_A/facility/ioc_env.sh     /etc/profile.d/
-	cp $IOC_COMMON/$T_A/facility/linuxRT_env.sh /etc/profile.d/
-	chmod 0777 /etc/profile.d/ioc_env.sh 
-	chmod 0777 /etc/profile.d/linuxRT_env.sh 
-fi
-
-# =============================================================
-# Create PCDS user id's
+# Create user id's
 # Must be done manually for apalis so passwords can be set.
 # Only needs to be done once, but filesystem needs to be mounted
 # rw so the user id's can be added and saved.
@@ -67,11 +57,11 @@ fi
 # =============================================================
 # Load Kernel Modules 
 # =============================================================
-source $IOC_COMMON/$T_A/common/kernel-modules.cmd
-
-# Some older versions of iocManager use PYPS_ROOT instead of PYPS_SITE_TOP
-PYPS_ROOT=$PYPS_SITE_TOP
+if [ -f $IOC_COMMON/$T_A/common/kernel-modules.cmd ];
+then
+	source $IOC_COMMON/$T_A/common/kernel-modules.cmd
+fi
 
 # Launch the iocManager
-$PYPS_SITE_TOP/apps/ioc/latest/initIOC
+source $IOC_COMMON/$T_A/common/initIOC.cmd
 

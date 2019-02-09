@@ -1,8 +1,17 @@
 # Set the common directory env variables
-if   [ -f  /reg/g/pcds/pyps/config/common_dirs.sh ]; then
+if   [ -f  /usr/local/lcls/epics/config/common_dirs.sh ]; then
+	source /usr/local/lcls/epics/config/common_dirs.sh 
+elif [ -f  /reg/g/pcds/pyps/config/common_dirs.sh ]; then
 	source /reg/g/pcds/pyps/config/common_dirs.sh
-elif [ -f  /afs/slac/g/pcds/config/common_dirs.sh ]; then
-	source /afs/slac/g/pcds/config/common_dirs.sh
+elif [ -f  /afs/slac/g/lcls/epics/config/common_dirs.sh ]; then
+	source /afs/slac/g/lcls/epics/config/common_dirs.sh
+fi
+
+export TZ=PST8PDT
+
+if [ -f "$SETUP_SITE_TOP/epicsenv-cur.sh" ]; then
+	# Select EPICS environment
+	source $SETUP_SITE_TOP/epicsenv-cur.sh
 fi
 
 # Set umask default to allow group write access
