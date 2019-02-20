@@ -6,7 +6,20 @@
 # Must be run as the "root" user.
 
 # Set the target architecture
-export T_A=apalis
+export T_A=linux-arm-apalis
+export IOC_COMMON=/reg/d/iocCommon
+
+if [ -f $IOC_COMMON/$T_A/common/mount_nfs.cmd ]; then
+	# =============================================================
+	# Mount common NFS drives
+	# =============================================================
+	source $IOC_COMMON/$T_A/common/mount_nfs.cmd
+elif [ -f /afs/slac/g/lcls/epics/iocCommon/$T_A/common/mount_nfs.cmd ]; then
+	# =============================================================
+	# Mount NFS drives for LCLS environment
+	# =============================================================
+	source /afs/slac/g/lcls/epics/iocCommon/$T_A/common/mount_nfs.cmd 
+fi
 
 # =============================================================
 # Setup the common directory env variables
@@ -19,21 +32,9 @@ elif [ -f  /afs/slac/g/lcls/epics/config/common_dirs.sh ]; then
 	source /afs/slac/g/lcls/epics/config/common_dirs.sh
 fi
 
-if [ -f $IOC_COMMON/$T_A/common/mount_nfs.cmd ]; then
-	# =============================================================
-	# Mount common NFS drives
-	# =============================================================
-	source $IOC_COMMON/$T_A/common/mount_nfs.cmd
-elif [ -f /afs/slac/g/lcls/epics/iocCommon/apalis/common/mount_nfs.cmd ]; then
-	# =============================================================
-	# Mount NFS drives for LCLS environment
-	# =============================================================
-	source /afs/slac/g/lcls/epics/iocCommon/apalis/common/mount_nfs.cmd 
-fi
-
 # =============================================================
 # Create user id's
-# Must be done manually for apalis so passwords can be set.
+# Must be done manually for linux-arm-apalis so passwords can be set.
 # Only needs to be done once, but filesystem needs to be mounted
 # rw so the user id's can be added and saved.
 # =============================================================
@@ -63,5 +64,5 @@ then
 fi
 
 # Launch the iocManager
-source $IOC_COMMON/$T_A/common/initIOC.cmd
+# source $IOC_COMMON/$T_A/common/initIOC.cmd
 

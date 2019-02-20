@@ -1,0 +1,20 @@
+[Unit]
+Description=SLAC mount /reg/d/iocCommon
+After=network-online.target remote-fs.target system.slice basic.target
+Wants=network-online.target remote-fs.target basic.target boot-complete.target
+#Requires=nfs-statd
+#ConditionPathIsReadWrite=/var/volatile
+#ConditionPathExists=/var/lib
+#ConditionPathIsReadWrite=!/var/lib
+
+[Service]
+Type=oneshot
+RemainAfterExit=Yes
+StandardOutput=syslog
+TimeoutSec=0
+Environment=IOC_COMMON=/reg/d/iocCommon
+ExecStart=/bin/mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocCommon $IOC_COMMON
+ExecStop=/bin/umount $IOC_COMMON
+
+[Install]
+WantedBy=multi-user.target

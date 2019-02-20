@@ -13,7 +13,7 @@ fi
 
 # =============================================================
 # Note: /reg/d/iocCommon has already been mounted via
-# /mnt/user/data/config/slac_startup.cmd
+# /mnt/user/data/config/slac-startup.cmd
 # =============================================================
 
 # ==============================================================================
