@@ -46,13 +46,22 @@ ulimit -c unlimited
 ulimit -l unlimited
 ulimit -r unlimited
 
+# Get hostname using $IOC_COMMON/All/get_hostname.sh
+# Checks for hostnames in $CONFIG_SITE_TOP/hosts.byIP
+IOC_HOST=`$IOC_COMMON/All/get_hostname.sh | tail -1`
+if [ "`hostname -s`" != "$IOC_HOST" ]; then
+	# Update hostname to match one found in $CONFIG_SITE_TOP/hosts.byIP
+	echo Updating hostname from `hostname -s` to $IOC_HOST
+	hostname $IOC_HOST
+fi
+
 # =============================================================
 # Run host specific startup if supplied
 # Allows host specific selection of versions for kernel-modules
 # =============================================================
-if [ -f $IOC_COMMON/$T_A/`hostname`/startup.cmd ];
+if [ -f $IOC_COMMON/$T_A/$IOC_HOST/startup.cmd ];
 then
-	source $IOC_COMMON/$T_A/`hostname`/startup.cmd
+	source $IOC_COMMON/$T_A/$IOC_HOST/startup.cmd
 fi
 
 # =============================================================

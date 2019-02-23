@@ -1,11 +1,7 @@
 [Unit]
 Description=SLAC mount /reg/d/iocCommon
-After=network-online.target remote-fs.target system.slice basic.target
-Wants=network-online.target remote-fs.target basic.target boot-complete.target
-#Requires=nfs-statd
-#ConditionPathIsReadWrite=/var/volatile
-#ConditionPathExists=/var/lib
-#ConditionPathIsReadWrite=!/var/lib
+After=network-online.target remote-fs.target system.slice
+Wants=network-online.target remote-fs.target system.slice boot-complete.target
 
 [Service]
 Type=oneshot

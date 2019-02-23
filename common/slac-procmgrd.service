@@ -1,18 +1,12 @@
 [Unit]
-Description=Run SLAC iocManager procmgrd procServ daemon
+Description=SLAC iocManager procmgrd procServ daemon
 After=slac-mount-iocCommon.service reg-d-iocCommon.mount reg-g-pcds.mount slac-startup.service
 Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount reg-g-pcds.mount slac-startup.service boot-complete.target
 
 [Service]
 Type=forking
-#Envrironment="IOC_COMMON=/reg/d/iocCommon"
-#Envrironment="IOC_COMMON=/reg/d/iocCommon PATH=/reg/g/pcds/package/python/python2.7.13/install/arm-cortexa9_neon-linux-gnueabihf/bin:/reg/g/pcds/package/procServ/procServ-2.7.0-1.3.0/install/arm-cortexa9_neon-linux-gnueabihf/bin:/reg/g/pcds/epics/R3.15.5-2.0/modules/pvAccessCPP/R6.1.0-0.1.0/bin/linux-arm-apalis:/reg/g/pcds/epics/base/R3.15.5-2.0/bin/linux-arm-apalis:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
 User=tstioc
-#ExecStart=/reg/d/iocCommon/All/procmgrd0.sh
-#ExecStart=/reg/d/iocCommon/All/procmgrd1.sh
-#ExecStart=/reg/d/iocCommon/All/procmgrd2.sh
 ExecStart=/reg/d/iocCommon/All/procmgrd.sh
-#ExecStart=/reg/d/iocCommon/All/caRepeaterd.sh
 
 [Install]
 WantedBy=multi-user.target

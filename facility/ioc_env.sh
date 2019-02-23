@@ -9,19 +9,17 @@ fi
 
 export TZ=PST8PDT
 
-if [ -f "$SETUP_SITE_TOP/epicsenv-cur.sh" ]; then
+IOC_HOST=`hostname -s`
+cfg=`echo $IOC_HOST | awk '{print substr($0,5,3);}' -`
+IOC_USER=${cfg}ioc
+IOC=$IOC_HOST
+if [ -f "$IOC_COMMON/All/common_env.sh" ]; then
 	# Select EPICS environment
-	source $SETUP_SITE_TOP/epicsenv-cur.sh
+	source $IOC_COMMON/All/common_env.sh
 fi
 
 # Set umask default to allow group write access
 umask 0002
-
-if [ `uname -r` = "3.14.12-rt9" ]; then
-export PAGER='less'
-else
-export PAGER='less -x4'
-fi
 
 export FIGNORE=".o:.obj"
 
@@ -86,6 +84,7 @@ BOLD_PURPLE='\e[1;35m'
 # \@	Time in 12hr am/pm 
 # \!	history number
 # \#	command number
+# \$	# for root, $ for user
 # \nnn	character for octal nnn
 # \\	backslash
 
@@ -102,6 +101,8 @@ alias short_prompt='export PS1="[\u@\h \W]$PTAIL "'
 
 # Default to long version of prompt
 if [ -n "$PS1" ]; then
-	long_prompt
+	export PS1="${TITLEBAR}$GREEN(\!) \@ $BLUE\u@\h:\w$NO_COLOR
+$PTAIL "
 fi
+export PS1="> "
 
