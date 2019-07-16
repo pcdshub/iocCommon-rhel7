@@ -26,3 +26,13 @@ then
 	fi
 	EV2_DRIVER=$EPICS_SITE_TOP/R3.14.12-0.4.0/modules/ev2_driver/$EV2_VER/
 fi
+
+# Select default SLAC PGP driver if not overridden
+if [ "$SLAC_PGP_DRIVER" == "" ];
+then
+	if [ "$SLAC_PGP_VER" == "" ];
+	then
+		SLAC_PGP_VER=latest
+	fi
+	SLAC_PGP_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_PGP_VER/install/`uname -r`/
+fi
