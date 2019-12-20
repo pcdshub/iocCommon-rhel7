@@ -1,0 +1,14 @@
+#!/bin/bash
+# Install this file to /etc/init.d/slac-startup
+# chkconfig: - 99 1
+# description: SLAC startup script to mount NFS drives and launch iocManager
+# processname: slac-startup
+
+SLAC_STARTUP=/mnt/user/data/config/slac-startup.cmd
+if [ -e $SLAC_STARTUP ]; then
+	$SLAC_STARTUP
+fi
+
+sleep 10
+exit 0
+
