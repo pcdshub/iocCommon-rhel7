@@ -16,6 +16,7 @@ then
 	#EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER
 	EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER/`uname -r`
 fi
+export EDT_DRIVER
 
 # Select default ev2 driver if not overridden
 if [ "$EV2_DRIVER" == "" ];
@@ -26,13 +27,16 @@ then
 	fi
 	EV2_DRIVER=$EPICS_SITE_TOP/R3.14.12-0.4.0/modules/ev2_driver/$EV2_VER/
 fi
+export EV2_DRIVER
 
-# Select default SLAC PGP driver if not overridden
-if [ "$SLAC_PGP_DRIVER" == "" ];
+# Select default SLAC DATADEV driver if not overridden
+if [ "$SLAC_DATADEV_DRIVER" == "" ];
 then
-	if [ "$SLAC_PGP_VER" == "" ];
+	if [ "$SLAC_DATADEV_VER" == "" ];
 	then
-		SLAC_PGP_VER=latest
+		SLAC_DATADEV_VER=latest
+		#SLAC_DATADEV_VER=R5.6.0-0.0.0
 	fi
-	SLAC_PGP_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_PGP_VER/install/`uname -r`/
+	SLAC_DATADEV_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_DATADEV_VER/install/`uname -r`/
 fi
+export SLAC_DATADEV_DRIVER

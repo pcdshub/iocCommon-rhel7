@@ -88,15 +88,20 @@ fi
 
 lspci_SLAC_pgp=`lspci -d 1a4a:2030 -n`
 if [ "$lspci_SLAC_pgp" != "" ]; then
-	if [ -n $SLAC_PGP_DRIVER -a -f $SLAC_PGP_DRIVER/datadev.ko ]; then
-		echo Installing SLAC PGP driver: $SLAC_PGP_DRIVER
-		insmod $SLAC_PGP_DRIVER/datadev.ko cfgSize=0x50000 cfgRxCount=256 cfgTxCount=16
-		chmod 666 /dev/datadev*
+	if [ -n "$SLAC_DATADEV_DRIVER" -a -f $SLAC_DATADEV_DRIVER/datadev.ko ]; then
+		if [ ! -n "foo" ]; then
+			# Not temporarily disabled - bhill
+			echo Temporarily NOT automatically Installing SLAC DATADEV driver: $SLAC_DATADEV_DRIVER
+		else
+			echo Installing SLAC DATADEV driver: $SLAC_DATADEV_DRIVER
+			insmod $SLAC_DATADEV_DRIVER/datadev.ko cfgSize=0x50000 cfgRxCount=256 cfgTxCount=16
+			chmod 666 /dev/datadev*
+		fi
 	else
-		echo SLAC PGP driver dir not found: $SLAC_PGP_DRIVER
+		echo SLAC DATADEV driver dir not found: $SLAC_DATADEV_DRIVER
 	fi
 else
-	echo SLAC PGP device not found.
+	echo SLAC DATADEV device not found.
 fi
 
 # Cleanup env so defaults won't stick during debugging
