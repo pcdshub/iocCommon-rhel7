@@ -24,20 +24,20 @@ addgroup -g 2341 ps-ioc
 
 # ====================================================================
 # Create one userid for each hutch or beamline area
-adduser -G ps-ioc -u 10404 amoioc -s $USER_SHELL -D; passwd amoioc
-adduser -G ps-ioc -u 12958 auxioc -s $USER_SHELL -D; passwd auxioc
-adduser -G ps-ioc -u 10668 cxiioc -s $USER_SHELL -D; passwd cxiioc
-adduser -G ps-ioc -u 13087 detioc -s $USER_SHELL -D; passwd detioc
-adduser -G ps-ioc -u 10403 feeioc -s $USER_SHELL -D; passwd feeioc
-adduser -G ps-ioc -u 10664 lasioc -s $USER_SHELL -D; passwd lasioc
-adduser -G ps-ioc -u 10669 mecioc -s $USER_SHELL -D; passwd mecioc
-adduser -G ps-ioc -u 10665 sxrioc -s $USER_SHELL -D; passwd sxrioc
-adduser -G ps-ioc -u 11926 thzioc -s $USER_SHELL -D; passwd thzioc
-adduser -G ps-ioc -u 11009 tstioc -s $BASH_SHELL -D; passwd tstioc
-adduser -G ps-ioc -u 10667 xcsioc -s $USER_SHELL -D; passwd xcsioc
-adduser -G ps-ioc -u 10666 xppioc -s $USER_SHELL -D; passwd xppioc
+adduser -G ps-ioc -u 12958 auxioc -D
+adduser -G ps-ioc -u 10668 cxiioc -D
+adduser -G ps-ioc -u 13087 detioc -D
+adduser -G ps-ioc -u 16909 kfeioc -D
+adduser -G ps-ioc -u 10664 lasioc -D
+adduser -G ps-ioc -u 16910 lfeioc -D
+adduser -G ps-ioc -u 10669 mecioc -D
+adduser -G ps-ioc -u 11926 thzioc -D
+adduser -G ps-ioc -u 16914 tmoioc -D
+adduser -G ps-ioc -u 11009 tstioc -D
+adduser -G ps-ioc -u 10667 xcsioc -D
+adduser -G ps-ioc -u 10666 xppioc -D
 
 # Test only
-adduser -G ps-ioc -u 10174 bhill -s $BASH_SHELL -D -h /home5/bhill; passwd bhill slac
+#adduser -G ps-ioc -u 10174 bhill -D /home5/bhill
 
 # End of file

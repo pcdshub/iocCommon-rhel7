@@ -100,9 +100,10 @@ $PTAIL "'
 alias short_prompt='export PS1="[\u@\h \W]$PTAIL "'
 
 # Default to long version of prompt
-if [ -n "$PS1" ]; then
-	export PS1="${TITLEBAR}$GREEN(\!) \@ $BLUE\u@\h:\w$NO_COLOR
-$PTAIL "
-fi
-export PS1="> "
+long_prompt
+#if [ -n "$PS1" ]; then
+#	export PS1="${TITLEBAR}$GREEN(\!) \@ $BLUE\u@\h:\w$NO_COLOR
+#$PTAIL "
+#fi
+#export PS1="> "
 
