@@ -7,7 +7,9 @@ mount -o remount,rw /
 # Mount IOC_COMMON
 export IOC_COMMON=/reg/d/iocCommon
 mkdir -p $IOC_COMMON
-mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocCommon $IOC_COMMON
+if [ ! -d $IOC_COMMON/All ]; then
+	mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocCommon $IOC_COMMON
+fi
 
 # Disable isegioc
 systemctl disable isegioc.service
