@@ -5,7 +5,7 @@ Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount boot-complete.target
 
 [Service]
 Type=oneshot
-ExecStart=/reg/d/iocCommon/linux-arm-apalis/common/startup.sh
+ExecStart=/reg/d/iocCommon/linux-arm-apalis/common/startup.cmd
 #ExecStart=/mnt/user/data/config/slac-startup.cmd
 
 [Install]
