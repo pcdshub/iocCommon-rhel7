@@ -11,8 +11,12 @@ if [ -z "$T_A" ]; then
 fi
 # =========================================
 # Find the packages and driver paths, allowing override
-# of the default driver version or path
+# of the default driver version or path via host specific file
 # =========================================
+if [ -f $IOC_COMMON/hosts/`hostname`/kernel-module-dirs.cmd ];
+then
+	source $IOC_COMMON/hosts/`hostname`/kernel-module-dirs.cmd
+fi
 source $IOC_COMMON/$T_A/common/kernel-module-dirs.cmd
 
 # =================================================
@@ -20,10 +24,13 @@ source $IOC_COMMON/$T_A/common/kernel-module-dirs.cmd
 # =================================================
 lspci_edt=`lspci -d 123d:* -n`
 if [ "$lspci_edt" != "" ]; then
-	if [ -d $EDT_DRIVER/ ]; then
+	if [ -d $EDT_DRIVER/ -a ! -e /dev/edt0 -a $UID -eq 0 ]; then
 		echo Installing EDT driver: $EDT_DRIVER
-		mkdir -p /opt/EDTpdv
-		mount --bind $EDT_DRIVER /opt/EDTpdv
+		if [ ! -e /opt/EDTpdv/version -o "R$(cat /opt/EDTpdv/version)" != "${EDT_VER}" ]; then
+			mkdir -p /opt/EDTpdv
+			mount --bind $EDT_DRIVER /opt/EDTpdv
+			mount --bind $PACKAGE_SITE_TOP/EDTpdv/${EDT_VER}/pdv /opt/pdv
+		fi
 		/opt/EDTpdv/edtinit.sh start
 	else
 		echo EDT driver dir not found: $EDT_DRIVER
@@ -86,22 +93,33 @@ fi
 #	echo MegaRaid device not found.
 #fi
 
-lspci_SLAC_pgp=`lspci -d 1a4a:2030 -n`
-if [ "$lspci_SLAC_pgp" != "" ]; then
-	if [ -n "$SLAC_DATADEV_DRIVER" -a -f $SLAC_DATADEV_DRIVER/datadev.ko ]; then
-		if [ ! -n "foo" ]; then
-			# Not temporarily disabled - bhill
-			echo Temporarily NOT automatically Installing SLAC DATADEV driver: $SLAC_DATADEV_DRIVER
-		else
-			echo Installing SLAC DATADEV driver: $SLAC_DATADEV_DRIVER
-			insmod $SLAC_DATADEV_DRIVER/datadev.ko cfgSize=0x50000 cfgRxCount=256 cfgTxCount=16
-			chmod 666 /dev/datadev*
-		fi
+lspci_SLAC_datadev=`lspci -d 1a4a:2030 -n`
+if [ "$lspci_SLAC_datadev" != "" ]; then
+	if [ -n "$SLAC_AES_DRIVER" -a -f $SLAC_AES_DRIVER/datadev.ko ]; then
+		echo Installing SLAC datadev driver: $SLAC_AES_DRIVER
+		rmmod datadev
+		insmod $SLAC_AES_DRIVER/datadev.ko cfgSize=0x210000 cfgRxCount=256 cfgTxCount=16
+		chmod 666 /dev/datadev*
 	else
-		echo SLAC DATADEV driver dir not found: $SLAC_DATADEV_DRIVER
+		echo SLAC AES driver not found: $SLAC_AES_DRIVER/datadev.ko
 	fi
 else
-	echo SLAC DATADEV device not found.
+	echo SLAC datadev device not found.
+fi
+
+lspci_SLAC_pgp=`lspci -d 1a4a:2020 -n`
+if [ "$lspci_SLAC_pgp" != "" ]; then
+	if [ -n "$SLAC_AES_DRIVER" -a -f $SLAC_AES_DRIVER/pgpcard.ko ]; then
+		echo Installing SLAC pgpcard driver: $SLAC_AES_DRIVER
+		rmmod pgpcard
+		rmmod pgpcardG3
+		insmod $SLAC_AES_DRIVER/pgpcard.ko cfgRxCount=256 cfgTxCount=64
+		chmod 666 /dev/pgpcard*
+	else
+		echo SLAC pgpcard driver not found: $SLAC_AES_DRIVER/pgpcard.ko
+	fi
+else
+	echo SLAC pgpcard device not found.
 fi
 
 # Cleanup env so defaults won't stick during debugging

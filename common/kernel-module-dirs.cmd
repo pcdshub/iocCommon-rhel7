@@ -10,7 +10,8 @@ if [ "$EDT_DRIVER" == "" ];
 then
 	if [ "$EDT_VER" == "" ];
 	then
-		EDT_VER=R5.5.1.6
+		#EDT_VER=R5.5.1.6
+		EDT_VER=R5.5.8.2
 	fi
 	#EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER/$T_A
 	#EDT_DRIVER=$PACKAGE_SITE_TOP/EDTpdv/$EDT_VER
@@ -29,14 +30,14 @@ then
 fi
 export EV2_DRIVER
 
-# Select default SLAC DATADEV driver if not overridden
-if [ "$SLAC_DATADEV_DRIVER" == "" ];
+# Select default SLAC_AES_DRIVER if not overridden
+if [ "$SLAC_AES_DRIVER" == "" ];
 then
-	if [ "$SLAC_DATADEV_VER" == "" ];
+	if [ "$SLAC_AES_VER" == "" ];
 	then
-		SLAC_DATADEV_VER=latest
-		#SLAC_DATADEV_VER=R5.6.0-0.0.0
+		SLAC_AES_VER=latest
+		#SLAC_AES_VER=R5.6.0-0.0.0
 	fi
-	SLAC_DATADEV_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_DATADEV_VER/install/`uname -r`/
+	SLAC_AES_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_AES_VER/install/`uname -r`/
 fi
-export SLAC_DATADEV_DRIVER
+export SLAC_AES_DRIVER

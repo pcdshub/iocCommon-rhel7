@@ -35,15 +35,6 @@ ulimit -l unlimited
 ulimit -r unlimited
 
 # =============================================================
-# Run host specific startup if supplied
-# Allows host specific selection of versions for kernel-modules
-# =============================================================
-if [ -f $IOC_COMMON/$T_A/`hostname`/startup.cmd ];
-then
-	source $IOC_COMMON/$T_A/`hostname`/startup.cmd
-fi
-
-# =============================================================
 # Load Kernel Modules 
 # =============================================================
 source $IOC_COMMON/$T_A/common/kernel-modules.cmd
