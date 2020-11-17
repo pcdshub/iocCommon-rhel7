@@ -1,11 +1,12 @@
 [Unit]
 Description=SLAC iocManager procmgrd procServ daemon
-After=slac-mount-iocCommon.service reg-d-iocCommon.mount reg-g-pcds.mount slac-startup.service
-Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount reg-g-pcds.mount slac-startup.service boot-complete.target
+After=slac-mount-iocCommon.service slac-mount-nfs.service reg-d-iocCommon.mount reg-g-pcds.mount
+Wants=slac-mount-iocCommon.service slac-mount-nfs.service reg-d-iocCommon.mount reg-g-pcds.mount boot-complete.target
 
 [Service]
 Type=forking
 User=tstioc
+ExecStartPre=/bin/sleep 3
 ExecStart=/reg/d/iocCommon/All/procmgrd.sh
 
 [Install]

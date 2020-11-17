@@ -9,6 +9,8 @@
 export T_A=linux-arm-apalis
 export IOC_COMMON=/reg/d/iocCommon
 
+if [ ! -d /reg/g/pcds/epics ]; then
+# TODO: Move to slac-mount-nfs.service
 if [ -f $IOC_COMMON/$T_A/common/mount_nfs.cmd ]; then
 	# =============================================================
 	# Mount common NFS drives
@@ -19,6 +21,7 @@ elif [ -f /afs/slac/g/lcls/epics/iocCommon/$T_A/common/mount_nfs.cmd ]; then
 	# Mount NFS drives for LCLS environment
 	# =============================================================
 	source /afs/slac/g/lcls/epics/iocCommon/$T_A/common/mount_nfs.cmd 
+fi
 fi
 
 # =============================================================
@@ -55,6 +58,9 @@ if [ "`hostname -s`" != "$IOC_HOST" ]; then
 	hostname $IOC_HOST
 fi
 
+# Stop isegioc
+systemctl stop isegioc
+
 # =============================================================
 # Run host specific startup if supplied
 # Allows host specific selection of versions for kernel-modules
@@ -73,5 +79,5 @@ then
 fi
 
 # Launch the iocManager
-# source $IOC_COMMON/$T_A/common/initIOC.cmd
+source $IOC_COMMON/$T_A/common/initIOC.cmd
 

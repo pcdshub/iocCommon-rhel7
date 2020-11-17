@@ -1,12 +1,11 @@
 [Unit]
 Description=SLAC startup script to mount NFS drives and install drivers
-After=slac-mount-iocCommon.service reg-d-iocCommon.mount 
-Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount boot-complete.target
+After=slac-mount-iocCommon.service reg-d-iocCommon.mount slac-procmgrd.service 
+Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount boot-complete.target slac-procmgrd.service 
 
 [Service]
 Type=oneshot
 ExecStart=/reg/d/iocCommon/linux-arm-apalis/common/startup.cmd
-#ExecStart=/mnt/user/data/config/slac-startup.cmd
 
 [Install]
 WantedBy=multi-user.target

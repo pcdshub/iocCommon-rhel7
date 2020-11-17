@@ -1,0 +1,11 @@
+[Unit]
+Description=SLAC startup script to mount NFS drives
+After=slac-mount-iocCommon.service reg-d-iocCommon.mount
+Wants=slac-mount-iocCommon.service reg-d-iocCommon.mount boot-complete.target
+
+[Service]
+Type=oneshot
+ExecStart=/reg/d/iocCommon/linux-arm-apalis/common/mount_nfs.cmd
+
+[Install]
+WantedBy=multi-user.target

@@ -18,6 +18,8 @@ if [ -f "$IOC_COMMON/All/common_env.sh" ]; then
 	source $IOC_COMMON/All/common_env.sh
 fi
 
+set -o vi
+
 # Set umask default to allow group write access
 umask 0002
 
@@ -100,10 +102,6 @@ $PTAIL "'
 alias short_prompt='export PS1="[\u@\h \W]$PTAIL "'
 
 # Default to long version of prompt
-long_prompt
-#if [ -n "$PS1" ]; then
-#	export PS1="${TITLEBAR}$GREEN(\!) \@ $BLUE\u@\h:\w$NO_COLOR
-#$PTAIL "
-#fi
-#export PS1="> "
+export PS1="${TITLEBAR}$GREEN(\!) \@ $BLUE\u@\h:\w$NO_COLOR
+$PTAIL "
 

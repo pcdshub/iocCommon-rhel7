@@ -9,7 +9,7 @@ RemainAfterExit=Yes
 StandardOutput=syslog
 TimeoutSec=0
 Environment=IOC_COMMON=/reg/d/iocCommon
-ExecStart=/bin/mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.76:/nfsexport/datapool/iocCommon $IOC_COMMON
+ExecStart=/bin/mount -o nolock,rw,hard,intr,vers=3 -t nfs 172.21.32.73:/nfsexport/datapool/iocCommon $IOC_COMMON
 ExecStop=/bin/umount $IOC_COMMON
 
 [Install]
