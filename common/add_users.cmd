@@ -20,6 +20,7 @@ adduser -G ps-ioc -u 10664 lasioc -D
 adduser -G ps-ioc -u 16910 lfeioc -D
 adduser -G ps-ioc -u 10669 mecioc -D
 adduser -G ps-ioc -u 11926 thzioc -D
+adduser -G ps-ioc -u 16915 rixioc -D
 adduser -G ps-ioc -u 16914 tmoioc -D
 adduser -G ps-ioc -u 11009 tstioc -D
 adduser -G ps-ioc -u 10667 xcsioc -D
