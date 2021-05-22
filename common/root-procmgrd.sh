@@ -12,6 +12,11 @@ fi
 
 # Figure out the hutch configuration: fee, amo, sxr, xpp, ...
 cfg=`$IOC_COMMON/All/hostname_to_cfg.sh`
+if [ ! -d $CONFIG_SITE_TOP/$cfg ]; then
+	echo $cfg is not a valid configuration.
+	echo Make sure your mpod crate hostname is listed in $CONFIG_SITE_TOP/hosts.byIP
+	exit 1
+fi
 echo Using configuration $cfg.
 #source $IOC_COMMON/All/${cfg}_env.sh
 

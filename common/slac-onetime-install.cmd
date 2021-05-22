@@ -18,9 +18,21 @@ source $IOC_COMMON/linux-arm-apalis/common/mount_nfs.cmd
 systemctl stop    isegioc.service
 systemctl disable isegioc.service
 
+# Validate the hostname
+IOC_HOST=`$IOC_COMMON/All/get_hostname.sh`
+if [ -z "$IOC_HOST" ]; then
+	echo $HOSTNAME is not a valid hostname.
+	echo Make sure your mpod crate hostname is listed in $CONFIG_SITE_TOP/hosts.byIP
+	exit 1
+fi
 # Figure out the hutch configuration: fee, amo, sxr, xpp, ...
 export CONFIG_SITE_TOP=/reg/g/pcds/pyps/config
 cfg=`$IOC_COMMON/All/hostname_to_cfg.sh`
+if [ ! -d $CONFIG_SITE_TOP/$cfg ]; then
+	echo $cfg is not a valid configuration.
+	echo Make sure your mpod crate hostname is listed in $CONFIG_SITE_TOP/hosts.byIP
+	exit 1
+fi
 echo Using configuration $cfg.
 
 # Install startup scripts
@@ -62,6 +74,9 @@ fi
 
 # Add users
 /reg/d/iocCommon/$T_A/common/add_users.cmd
+
+# Make sure isegioc service is disabled
+systemctl disable isegioc.service
 
 # Mount RO
 #mount -o remount,ro /
