@@ -35,8 +35,8 @@ if [ "$SLAC_AES_DRIVER" == "" ];
 then
 	if [ "$SLAC_AES_VER" == "" ];
 	then
-		SLAC_AES_VER=latest
-		#SLAC_AES_VER=R5.6.0-0.0.0
+		#SLAC_AES_VER=latest
+		SLAC_AES_VER=v5.15.1
 	fi
 	SLAC_AES_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_AES_VER/install/`uname -r`/
 fi

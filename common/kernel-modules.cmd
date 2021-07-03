@@ -98,7 +98,7 @@ if [ "$lspci_SLAC_datadev" != "" ]; then
 	if [ -n "$SLAC_AES_DRIVER" -a -f $SLAC_AES_DRIVER/datadev.ko ]; then
 		echo Installing SLAC datadev driver: $SLAC_AES_DRIVER
 		rmmod datadev
-		insmod $SLAC_AES_DRIVER/datadev.ko cfgSize=0x210000 cfgRxCount=256 cfgTxCount=16
+		insmod $SLAC_AES_DRIVER/datadev.ko cfgSize=0x200000 cfgRxCount=256 cfgTxCount=16
 		chmod 666 /dev/datadev*
 	else
 		echo SLAC AES driver not found: $SLAC_AES_DRIVER/datadev.ko
