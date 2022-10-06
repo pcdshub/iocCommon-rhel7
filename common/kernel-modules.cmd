@@ -66,6 +66,20 @@ else
 	echo EVR not found.
 fi
 
+# Check for SLAC TPR board
+lspci_slac_tpr=`lspci -d 1a4a:2011 -n`
+if [ "$lspci_slac_tpr" != "" ]; then
+	if [ -n "$TPR_DRIVER" -a -f $TPR_DRIVER/`uname -r`/tpr.ko ]; then
+		echo Installing SLAC TPR driver: $TPR_DRIVER
+		(cd $TPR_DRIVER/`uname -r`; $TPR_DRIVER/src/load_module.sh)
+	else
+		export TPR_DRIVER=${TPR_DRIVER:=TPR_DRIVER}
+		echo SLAC TPR driver kernel object not found: $TPR_DRIVER/`uname -r`/tpr.ko
+	fi
+else
+	echo SLAC TPR not found.
+fi
+
 lspci_perle=`lspci -d 155f:* -n`
 if [ "$lspci_perle" != "" ]; then
 	if [ -n $PERLE_SERIAL_DRIVER -a -d $PERLE_SERIAL_DRIVER/ ]; then
@@ -125,6 +139,7 @@ fi
 # Cleanup env so defaults won't stick during debugging
 unset EDT_DRIVER;			unset EDT_VER
 unset EV2_DRIVER;			unset EV2_VER;
+unset TPR_DRIVER;			unset TPR_VER;
 unset MEGARAID_DRIVER;		unset MEGARAID_VER
 unset PERLE_SERIAL_DRIVER;	unset PERLE_VER
 
