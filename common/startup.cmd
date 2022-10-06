@@ -42,6 +42,7 @@ source $IOC_COMMON/$T_A/common/kernel-modules.cmd
 # Some older versions of iocManager use PYPS_ROOT instead of PYPS_SITE_TOP
 PYPS_ROOT=$PYPS_SITE_TOP
 
-# Launch the iocManager
-$PYPS_SITE_TOP/apps/ioc/latest/initIOC
-
+if ! ps -C procmgrd0 > /dev/null; then
+	# Launch the iocManager
+	$PYPS_SITE_TOP/apps/ioc/latest/initIOC
+fi
