@@ -41,3 +41,14 @@ then
 	SLAC_AES_DRIVER=$PACKAGE_SITE_TOP/slaclab/aes-stream-drivers/$SLAC_AES_VER/install/`uname -r`/
 fi
 export SLAC_AES_DRIVER
+
+# Select default TPR driver if not overridden
+if [ "$TPR_DRIVER" == "" ];
+then
+	if [ "$TPR_VER" == "" ];
+	then
+		TPR_VER=latest
+	fi
+	TPR_DRIVER=$PACKAGE_SITE_TOP/slaclab/pcieTprDriver/$TPR_VER/
+fi
+export TPR_DRIVER
