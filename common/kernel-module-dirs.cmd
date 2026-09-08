@@ -26,7 +26,7 @@ then
 	then
 		EV2_VER=latest
 	fi
-	EV2_DRIVER=$EPICS_SITE_TOP/R7.0.3.1-2.0/modules/ev2_driver/$EV2_VER/
+	EV2_DRIVER=$EPICS_MODULES/ev2_driver/$EV2_VER/
 fi
 export EV2_DRIVER
 
